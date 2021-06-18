@@ -2,12 +2,18 @@
 from flask import Flask, request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, Float, String
+import os
 
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///"+os.path.join(basedir+"planets.db")
 
 ##creating an object to initialize the app
 app = Flask(__name__)
 
+
+db = SQLAlchemy(app)
 
 ##creating a route for home page
 @app.route("/home")
@@ -52,6 +58,8 @@ def parameters_modern(name:str,age:int):
 
 
 ##creating the ORM template for databases
+
+
 
 
 
