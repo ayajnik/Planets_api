@@ -18,6 +18,66 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
+##creating flask cli commands to get test data
+@app.cli.command("db_create")
+def db_create():
+    db.create_all()
+    print("Database created")
+
+
+@app.cli.command("db_drop")
+def db_drop():
+    db.drop()
+    print("Database deleted")
+
+@app.cli.command("db_seed")
+def db_seed():
+    mercury = Planet(
+        planet_id = 1
+        ,planet_name = "Mercury"
+        ,planet_type = "Class A"
+        ,home_star = "home_star_1"
+        ,mass = 3.25e654
+        ,distance = 3.658214e52
+        ,radius = 1.253e23
+    )
+
+    venus = Planet(
+        planet_id = 2
+        ,planet_name = "Venus"
+        ,planet_type = "Class B"
+        ,home_star = "home_star_2"
+        ,mass = 3.25e664
+        ,distance = 3.658214e56
+        ,radius = 1.253e25
+    )
+
+    earth = Planet(
+        planet_id = 3
+        ,planet_name = "Earth"
+        ,planet_type = "Class C"
+        ,home_star = "home_star_3"
+        ,mass = 3.25e674
+        ,distance = 3.658214e58
+        ,radius = 1.253e29
+    )
+
+    db.session.add(mercury)
+    db.session.add(venus)
+    db.session.add(earth)
+
+    test_user = Users(
+        id = 1
+        ,first_name = "Ayush"
+        ,last_name = "Yajnik"
+        ,email = "ayushyajnik@outlook.com"
+        ,password = "password"
+    )
+
+    db.session.add(test_user)
+    db.session.commit()
+
+
 ##creating a route for home page
 @app.route("/home")
 def home():
